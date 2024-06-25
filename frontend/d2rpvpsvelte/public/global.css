@@ -1,0 +1,294 @@
+@import url('reset.css');
+
+@font-face {
+    font-family: "diablo";
+    src: url(kodia.ttf);
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: 'diablo';
+    background-image: url(../img/bgimg.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed; /* 페이지 스크롤 시 배경 이미지 고정 */
+    background-size: contain; /* 배경 이미지 크기를 원본 비율로 유지 */  
+    text-align: center;
+}
+
+
+.menu {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.menu_link {
+    border-radius: 15px;
+    border: 5px white solid;
+    padding: 3px;
+    margin: 3px;
+    font-size: 25px;
+    background-color: #444C;
+}
+
+.menu_link:hover {
+    transform: scale(110%);
+    color: yellow;
+    border: 5px yellow solid;
+}
+
+.logined-info, .logouted-info {
+    display: flex;
+    justify-content: right;
+}
+
+.logined-info_admin, .logined-info_logout, .logined-info_myinfo, .logouted-info_login, .logouted-info_register, .logouted-info_mode {
+    display: flex;
+    align-items: center;
+    border: 2px white solid;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.logined-info_admin:hover, .logined-info_logout:hover, .logined-info_myinfo:hover, .logouted-info_login:hover, .logouted-info_register:hover, .logouted-info_mode:hover {
+    color: yellow;
+    border: 2px yellow solid;
+}
+
+button:hover, .button:hover{   
+    
+  color: yellow;
+  border: 2px yellow solid;}
+
+.size-6 {
+    width: 24px;
+    height: 24px;
+}
+
+
+.table-outline {
+    border-radius: 15px;
+    border: 3px white solid;
+    text-align: center;
+    line-height: 35px;
+
+  }
+
+@media (max-width:1200px)
+{.table-outline{
+  font-size: 20px;
+}.ranksize{
+  width: 20px;
+  height: 20px;
+}
+.main_data{
+width: 90vw;
+margin: 50px auto;
+
+}
+}
+@media (min-width:1200px)
+{.table-outline{
+  font-size: 30px;
+}
+.ranksize{
+  width: 30px;
+  height: 30px;
+
+}
+.main_data{
+  width: 80vw;
+  margin: 50px auto;
+}
+
+}
+
+
+@media (max-width:600px)
+{.table-outline{
+  font-size: 15px;
+}.ranksize{
+  width: 15px;
+  height: 15px;
+
+}
+.main_data {
+width:95vw;
+margin: 50px auto;
+}
+
+
+}
+
+
+
+.ranksize {
+  border-radius: 10px;
+  border: 3px solid white;
+}
+
+
+
+
+
+  .table-contents-wrapper:nth-child(odd) .table-contents,
+  .table-contents-wrapper:nth-child(odd) .table-contents_detail {
+    background-color: #555d;
+  }
+
+  .table-contents-wrapper:nth-child(even) .table-contents,
+  .table-contents-wrapper:nth-child(even) .table-contents_detail {
+    background-color: #888d;
+  }
+
+  .table-head,
+  .table-contents {
+    display: flex;
+    align-items: center;
+  }
+  .table-contents_cell {
+    padding: 10px;
+    overflow: hidden; /* Hide overflow text */
+    white-space: nowrap; /* Prevent line breaks */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+  }
+  
+.table-contents_right-cell{
+    padding: 10px;
+    overflow: hidden; /* Hide overflow text */
+    white-space: nowrap; /* Prevent line breaks */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+  
+}
+
+.table-contents {
+    border-top: 3px solid white;
+    cursor: pointer; /* 클릭 가능한 커서 */
+  }
+
+  .table-contents:hover {
+color: skyblue; 
+}
+
+
+
+  .table-contents_detail {
+    display: none;
+    text-align: left;
+    padding: 10px;
+    border-top: 3px solid white;
+    background-color: #222d; /* 세부 정보 배경색 추가 */
+  }
+
+  .table-contents_detail.show {
+    display: block;
+  }
+
+  .table-head{
+background-color: #000D;
+border-top-left-radius: 15px;
+border-top-right-radius: 15px;
+  }
+
+  button, .button {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    border: solid white 2px;
+    font-size: 20px;
+    font-family: "diablo";
+    cursor: pointer;
+  }
+
+  .buttonLink {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    border: solid white 2px;
+    text-align: center;
+    width: 150px;
+  }
+
+
+
+.left{
+  text-align: left;
+}
+
+.namewidth {
+  width: 250px;
+  font-size: 20px;
+  color:white;
+  height: 30px;
+  padding: auto;
+  display: block;
+  margin-bottom: 5px;
+  font-family: "diablo";
+  background-color: #0000;
+  border: solid white 1px;
+  border-radius: 5px;
+}
+
+
+
+.scorewidth {
+  width: 50px;
+  font-size: 20px;
+  color:white;
+  height: 30px;
+  padding: auto;
+  display: block;
+  margin-bottom: 5px;
+  font-family: "diablo";
+  background-color: #0000;
+  border: solid white 1px;
+  border-radius: 5px;
+}
+
+.numberwidth {
+  width: 150px;
+  font-size: 20px;
+  color:white;
+  height: 30px;
+  padding: auto;
+  display: block;
+  margin-bottom: 5px;
+  font-family: "diablo";
+  background-color: #0000;
+  border: solid white 1px;
+  border-radius: 5px;
+}
+
+
+select option {
+background-color: black;
+}
+
+
+.center {
+  margin: 0 auto;
+  background-color: black;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.fixed-button-div{
+position: fixed;
+bottom:10vh;
+right:10vw;
+}
+
+
+.table-divide {
+  padding: auto;
+  width: 45%;
+  display: flex;
+}
+.left {
+  margin-top: 5px;
+  margin-left: 5px;
+}
