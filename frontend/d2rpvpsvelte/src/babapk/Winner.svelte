@@ -39,6 +39,9 @@
       third: "Head",
       details: "정식전 : 1위 Duky 2위 Jay 3위 오찬물",
     },
+  ];
+
+  let Pastwinners = [
     {
       season: "2023.12 랭킹전",
       first: "Duky",
@@ -169,6 +172,17 @@
   function toggleDetails(index) {
     showDetails = showDetails.map((val, i) => (i === index ? !val : val));
   }
+
+  let showPastDetails = Array(Pastwinners.length).fill(false);
+  function togglePastDetails(index) {
+    showPastDetails = showPastDetails.map((val, i) =>
+      i === index ? !val : val
+    );
+  }
+  let showPastWinner = false;
+  function togglePastwinners() {
+    showPastWinner = !showPastWinner;
+  }
 </script>
 
 <div class="table-outline main_data">
@@ -190,6 +204,26 @@
         <div class="table-contents_detail show">{@html details}</div>{/if}
     </div>
   {/each}
+
+  <div class="table-contents-wrapper">
+    <div class="table-contents textcenter" on:click={() => togglePastwinners()}>
+      <div class="text-center">이전 시즌 결과 보기</div>
+    </div>
+  </div>
+  {#if showPastWinner}
+    {#each Pastwinners as { season, first, second, third, details }, index}
+      <div class="table-contents-wrapper">
+        <div class="table-contents" on:click={() => togglePastDetails(index)}>
+          <div class="table-eventname">{season}</div>
+          <div class="table-1st">{first}</div>
+          <div class="table-2nd">{second}</div>
+          <div class="table-3rd">{third}</div>
+        </div>
+        {#if showPastDetails[index]}
+          <div class="table-contents_detail show">{@html details}</div>{/if}
+      </div>
+    {/each}
+  {/if}
 </div>
 
 <style>

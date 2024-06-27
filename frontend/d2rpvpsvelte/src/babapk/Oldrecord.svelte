@@ -86,6 +86,25 @@
   let data = [];
   let selectedYearMonth = lastMonth; // 지난달을 기본값으로 설정
 
+  // 두 번째 테이블 관련 변수
+  let secondTableCurrentPage = 1;
+  const secondTableItemsPerPage = 10;
+  let secondTablePaginatedData = [];
+
+  $: secondTableTotalPages = () =>
+    Math.ceil(lookingdata.length / secondTableItemsPerPage);
+
+  function secondTableChangePage(page) {
+    secondTableCurrentPage = page;
+    updateSecondTablePaginatedData(); // 페이지 변경 시 페이지네이션 데이터 업데이트
+  }
+
+  function updateSecondTablePaginatedData() {
+    const start = (secondTableCurrentPage - 1) * secondTableItemsPerPage;
+    const end = start + secondTableItemsPerPage;
+    secondTablePaginatedData = lookingdata.slice(start, end);
+  }
+
   onMount(async () => {
     await loadoldrecord();
     fetchData();
@@ -111,9 +130,11 @@
     lookingdata = data.filter(
       (item) => item.year === ym.year && item.month === ym.month
     );
+    updateSecondTablePaginatedData(); // 필터링 후 페이지네이션 데이터 업데이트
   }
 </script>
 
+<!-- 두 번째 테이블 -->
 <div class="main_data">
   <select
     class="namewidth"
@@ -136,17 +157,46 @@
     <div class="table-nickname">닉네임</div>
     <div class="table-tscore">총점</div>
   </div>
-  {#each lookingdata as { Nickname, tscore }, index}
+  {#each secondTablePaginatedData as { Nickname, tscore }, index}
     <div class="table-contents-wrapper">
       <div class="table-contents">
-        <div class="table-rank">{index + 1}</div>
+        <div class="table-rank">
+          {index + 1 + (secondTableCurrentPage - 1) * secondTableItemsPerPage}
+        </div>
         <div class="table-nickname">{Nickname}</div>
         <div class="table-tscore">{Math.round(tscore)}</div>
       </div>
     </div>
   {/each}
+  <div class="pagination">
+    {#if secondTableCurrentPage > 1}
+      <button on:click={() => secondTableChangePage(1)}>First</button>
+      <button on:click={() => secondTableChangePage(secondTableCurrentPage - 1)}
+        >Previous</button
+      >
+    {/if}
+
+    {#each Array(secondTableTotalPages()) as _, pageIndex (pageIndex)}
+      <button
+        class:active={secondTableCurrentPage === pageIndex + 1}
+        on:click={() => secondTableChangePage(pageIndex + 1)}
+      >
+        {pageIndex + 1}
+      </button>
+    {/each}
+
+    {#if secondTableCurrentPage < secondTableTotalPages()}
+      <button on:click={() => secondTableChangePage(secondTableCurrentPage + 1)}
+        >Next</button
+      >
+      <button on:click={() => secondTableChangePage(secondTableTotalPages())}
+        >Last</button
+      >
+    {/if}
+  </div>
 </div>
 
+<!-- 첫 번째 테이블 -->
 <br />
 <br />
 <br />
@@ -207,6 +257,11 @@
       </div>
     {/each}
     <div class="pagination">
+      {#if currentPage > 1}
+        <button on:click={() => changePage(1)}>First</button>
+        <button on:click={() => changePage(currentPage - 1)}>Previous</button>
+      {/if}
+
       {#each Array(totalPages()) as _, pageIndex (pageIndex)}
         <button
           class:active={currentPage === pageIndex + 1}
@@ -215,6 +270,11 @@
           {pageIndex + 1}
         </button>
       {/each}
+
+      {#if currentPage < totalPages()}
+        <button on:click={() => changePage(currentPage + 1)}>Next</button>
+        <button on:click={() => changePage(totalPages())}>Last</button>
+      {/if}
     </div>
   {/if}
 </div>

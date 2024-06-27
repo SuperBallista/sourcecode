@@ -3791,7 +3791,7 @@ app.post('/submitevent_m', csrfProtection, isAuthenticated, async (req, res)=> {
     Runner_up1, Runner_up2, Runner_up3, Runner_up4,
     Place3rd1, Place3rd2, Place3rd3, Place3rd4,
     accept 
-    FROM b_eventrecord
+    FROM b_eventrecord ORDER BY OrderNum DESC
     `);
 
     res.status(200).json(eventdata);
@@ -3816,7 +3816,7 @@ app.get('/eventhistory_m', async (req, res) => {
   Runner_up1, Runner_up2, Runner_up3, Runner_up4,
   Place3rd1, Place3rd2, Place3rd3, Place3rd4,
   accept 
-  FROM m_eventrecord
+  FROM m_eventrecord ORDER BY OrderNum DESC
   `);
 
   res.status(200).json(eventdata);

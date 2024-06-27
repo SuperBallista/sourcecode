@@ -271,6 +271,11 @@ background-color: black;
   margin: 0 auto;
   background-color: black;
 }
+.text-center{
+  width: 100%;
+  text-align: center;
+
+}
 
 .text-center{
   text-align: center;

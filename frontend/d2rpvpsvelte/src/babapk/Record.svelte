@@ -18,7 +18,7 @@
   let error = null;
   let showDetails = [];
   let currentPage = 1;
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
   let filter = "All";
   let filteredData = [];
   let paginatedData = [];
@@ -53,6 +53,7 @@
       unsubscribe();
     };
   });
+
   function toggleDetails(index) {
     showDetails[index] = !showDetails[index];
     showDetails = [...showDetails]; // 배열을 업데이트하여 Svelte가 반응하도록 함
@@ -92,9 +93,36 @@
     filteredData = applyFilter(recordData);
     updatePaginatedData(); // 페이지네이션 데이터 초기화
   }
+
+  function visiblePages() {
+    const maxVisible = 5; // 한 번에 표시할 최대 페이지 수
+    const pages = [];
+
+    if (totalPages() <= maxVisible) {
+      for (let i = 1; i <= totalPages(); i++) {
+        pages.push(i);
+      }
+    } else {
+      let start = Math.max(currentPage - Math.floor(maxVisible / 2), 1);
+      let end = start + maxVisible - 1;
+
+      if (end > totalPages()) {
+        end = totalPages();
+        start = end - maxVisible + 1;
+      }
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+    }
+
+    return pages;
+  }
+
   function updatekey() {
     key.update((n) => n + 1);
   }
+
   async function delete_row(OrderNum) {
     const token = get(csrfToken); // Svelte store에서 현재 값을 가져옴
 
@@ -186,14 +214,24 @@
       </div>
     {/each}
     <div class="pagination">
-      {#each Array(totalPages()) as _, pageIndex (pageIndex)}
+      {#if currentPage > 1}
+        <button on:click={() => changePage(1)}>First</button>
+        <button on:click={() => changePage(currentPage - 1)}>Previous</button>
+      {/if}
+
+      {#each visiblePages() as page}
         <button
-          class:active={currentPage === pageIndex + 1}
-          on:click={() => changePage(pageIndex + 1)}
+          class:active={currentPage === page}
+          on:click={() => changePage(page)}
         >
-          {pageIndex + 1}
+          {page}
         </button>
       {/each}
+
+      {#if currentPage < totalPages()}
+        <button on:click={() => changePage(currentPage + 1)}>Next</button>
+        <button on:click={() => changePage(totalPages())}>Last</button>
+      {/if}
     </div>
   {/if}
 </div>
