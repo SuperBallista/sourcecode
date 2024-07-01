@@ -26,7 +26,7 @@ const teams2ScoreB = {Championship: 10};
 const teams4ScoreB = {Championship: 10, Runner_up: 5};
 const teams8ScoreB = {Championship: 20, Runner_up: 10, Place3rd: 5};
 const teams16ScoreB = {Championship: 30, Runner_up: 20, Place3rd: 10};
-const teams24ScoreB = {Championship: 50, Runner_up: 30, Place3rd: 20};
+const teams24ScoreB = {Championship: 100, Runner_up: 80, Place3rd: 60};
 const teams4TScoreB = {Championship: 20, Runner_up: 10};
 
 const teams2ScoreM = {Championship: 8};
@@ -34,6 +34,7 @@ const teams4ScoreM = {Championship: 19, Runner_up: 9};
 const teams8ScoreM = {Championship: 30, Runner_up: 20, Place3rd: 10};
 const teams16ScoreM = {Championship: 42, Runner_up: 32, Place3rd: 22};
 
+const EventhostScore = 3
 
 
 const updateuserBScoreQuery = `
@@ -52,7 +53,7 @@ const todaydate = moment().utcOffset('+0900').format('YYYY-MM-DD HH:mm:ss');
 
 
 // 기본 설정
-const startscore = 0;
+const startscore = 1000;
 let add_score;
 let subtractScore;
 
@@ -3533,26 +3534,7 @@ const Place3rd1 = eventdata.Place3rd1;
 const Place3rd2 = eventdata.Place3rd2;
 const Place3rd3 = eventdata.Place3rd3;
 const Place3rd4 = eventdata.Place3rd4;
-const Semifinalist1 = eventdata.Semifinalist1;
-const Semifinalist2 = eventdata.Semifinalist2;
-const Semifinalist3 = eventdata.Semifinalist3;
-const Semifinalist4 = eventdata.Semifinalist4;
-const Quarterfinalist1 = eventdata.Quarterfinalist1;
-const Quarterfinalist2 = eventdata.Quarterfinalist2;
-const Quarterfinalist3 = eventdata.Quarterfinalist3;
-const Quarterfinalist4 = eventdata.Quarterfinalist4;
-const Quarterfinalist5 = eventdata.Quarterfinalist5;
-const Quarterfinalist6 = eventdata.Quarterfinalist6;
-const Quarterfinalist7 = eventdata.Quarterfinalist7;
-const Quarterfinalist8 = eventdata.Quarterfinalist8;
-const Quarterfinalist9 = eventdata.Quarterfinalist9;
-const Quarterfinalist10 = eventdata.Quarterfinalist10;
-const Quarterfinalist11 = eventdata.Quarterfinalist11;
-const Quarterfinalist12 = eventdata.Quarterfinalist12;
-const Quarterfinalist13 = eventdata.Quarterfinalist13;
-const Quarterfinalist14 = eventdata.Quarterfinalist14;
-const Quarterfinalist15 = eventdata.Quarterfinalist15;
-const Quarterfinalist16 = eventdata.Quarterfinalist16;
+const Eventhost = eventdata.Eventhost;
 
 const inputeventdata = `
   INSERT INTO b_eventrecord (
@@ -3572,32 +3554,13 @@ const inputeventdata = `
     Place3rd2,
     Place3rd3,
     Place3rd4,
-    Semifinalist1,
-    Semifinalist2,
-    Semifinalist3,
-    Semifinalist4,
-    Quarterfinalist1,
-    Quarterfinalist2,
-    Quarterfinalist3,
-    Quarterfinalist4,
-    Quarterfinalist5,
-    Quarterfinalist6,
-    Quarterfinalist7,
-    Quarterfinalist8,
-    Quarterfinalist9,
-    Quarterfinalist10,
-    Quarterfinalist11,
-    Quarterfinalist12,
-    Quarterfinalist13,
-    Quarterfinalist14,
-    Quarterfinalist15,
-    Quarterfinalist16
+    Eventhost
   )
-  VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `;
 
 const connection = await pool.getConnection();
-const result = await connection.query(inputeventdata, [
+await connection.query(inputeventdata, [
   eventname,
   numberteams,
   teamSize,
@@ -3613,26 +3576,7 @@ const result = await connection.query(inputeventdata, [
   Place3rd2,
   Place3rd3,
   Place3rd4,
-  Semifinalist1,
-  Semifinalist2,
-  Semifinalist3,
-  Semifinalist4,
-  Quarterfinalist1,
-  Quarterfinalist2,
-  Quarterfinalist3,
-  Quarterfinalist4,
-  Quarterfinalist5,
-  Quarterfinalist6,
-  Quarterfinalist7,
-  Quarterfinalist8,
-  Quarterfinalist9,
-  Quarterfinalist10,
-  Quarterfinalist11,
-  Quarterfinalist12,
-  Quarterfinalist13,
-  Quarterfinalist14,
-  Quarterfinalist15,
-  Quarterfinalist16
+  Eventhost,
 ]);
 
 connection.release();
@@ -3666,26 +3610,7 @@ app.post('/submitevent_m', csrfProtection, isAuthenticated, async (req, res)=> {
   const Place3rd2 = eventdata.Place3rd2;
   const Place3rd3 = eventdata.Place3rd3;
   const Place3rd4 = eventdata.Place3rd4;
-  const Semifinalist1 = eventdata.Semifinalist1;
-  const Semifinalist2 = eventdata.Semifinalist2;
-  const Semifinalist3 = eventdata.Semifinalist3;
-  const Semifinalist4 = eventdata.Semifinalist4;
-  const Quarterfinalist1 = eventdata.Quarterfinalist1;
-  const Quarterfinalist2 = eventdata.Quarterfinalist2;
-  const Quarterfinalist3 = eventdata.Quarterfinalist3;
-  const Quarterfinalist4 = eventdata.Quarterfinalist4;
-  const Quarterfinalist5 = eventdata.Quarterfinalist5;
-  const Quarterfinalist6 = eventdata.Quarterfinalist6;
-  const Quarterfinalist7 = eventdata.Quarterfinalist7;
-  const Quarterfinalist8 = eventdata.Quarterfinalist8;
-  const Quarterfinalist9 = eventdata.Quarterfinalist9;
-  const Quarterfinalist10 = eventdata.Quarterfinalist10;
-  const Quarterfinalist11 = eventdata.Quarterfinalist11;
-  const Quarterfinalist12 = eventdata.Quarterfinalist12;
-  const Quarterfinalist13 = eventdata.Quarterfinalist13;
-  const Quarterfinalist14 = eventdata.Quarterfinalist14;
-  const Quarterfinalist15 = eventdata.Quarterfinalist15;
-  const Quarterfinalist16 = eventdata.Quarterfinalist16;
+  const Eventhost = eventdata.Eventhost;
   
   const inputeventdata = `
     INSERT INTO m_eventrecord (
@@ -3705,28 +3630,9 @@ app.post('/submitevent_m', csrfProtection, isAuthenticated, async (req, res)=> {
       Place3rd2,
       Place3rd3,
       Place3rd4,
-      Semifinalist1,
-      Semifinalist2,
-      Semifinalist3,
-      Semifinalist4,
-      Quarterfinalist1,
-      Quarterfinalist2,
-      Quarterfinalist3,
-      Quarterfinalist4,
-      Quarterfinalist5,
-      Quarterfinalist6,
-      Quarterfinalist7,
-      Quarterfinalist8,
-      Quarterfinalist9,
-      Quarterfinalist10,
-      Quarterfinalist11,
-      Quarterfinalist12,
-      Quarterfinalist13,
-      Quarterfinalist14,
-      Quarterfinalist15,
-      Quarterfinalist16
+      Eventhost
     )
-    VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
   
   const connection = await pool.getConnection();
@@ -3746,26 +3652,7 @@ app.post('/submitevent_m', csrfProtection, isAuthenticated, async (req, res)=> {
     Place3rd2,
     Place3rd3,
     Place3rd4,
-    Semifinalist1,
-    Semifinalist2,
-    Semifinalist3,
-    Semifinalist4,
-    Quarterfinalist1,
-    Quarterfinalist2,
-    Quarterfinalist3,
-    Quarterfinalist4,
-    Quarterfinalist5,
-    Quarterfinalist6,
-    Quarterfinalist7,
-    Quarterfinalist8,
-    Quarterfinalist9,
-    Quarterfinalist10,
-    Quarterfinalist11,
-    Quarterfinalist12,
-    Quarterfinalist13,
-    Quarterfinalist14,
-    Quarterfinalist15,
-    Quarterfinalist16
+    Eventhost,
   ]);
   
   connection.release();
@@ -3789,7 +3676,7 @@ app.post('/submitevent_m', csrfProtection, isAuthenticated, async (req, res)=> {
     eventname, numberteams, teamSize,
     Championship1, Championship2, Championship3, Championship4,
     Runner_up1, Runner_up2, Runner_up3, Runner_up4,
-    Place3rd1, Place3rd2, Place3rd3, Place3rd4,
+    Place3rd1, Place3rd2, Place3rd3, Place3rd4, Eventhost,
     accept 
     FROM b_eventrecord ORDER BY OrderNum DESC
     `);
@@ -3814,7 +3701,7 @@ app.get('/eventhistory_m', async (req, res) => {
   eventname, numberteams, teamSize,
   Championship1, Championship2, Championship3, Championship4,
   Runner_up1, Runner_up2, Runner_up3, Runner_up4,
-  Place3rd1, Place3rd2, Place3rd3, Place3rd4,
+  Place3rd1, Place3rd2, Place3rd3, Place3rd4, Eventhost,
   accept 
   FROM m_eventrecord ORDER BY OrderNum DESC
   `);
@@ -3949,6 +3836,7 @@ app.post('/accept-event', csrfProtection, isAuthenticated, async (req, res) => {
   const Place3rd4 = req.body.Place3rd4;
   const numberteams = req.body.numberteams;
   const teamSize = req.body.teamSize;
+  const Eventhost = req.body.Eventhost;
 
 
   const updateQueriesCham = [Championship1, Championship2, Championship3, Championship4];
@@ -3967,6 +3855,8 @@ const updateLScoreQuery = `
 try{
     connection = await pool.getConnection();
     await connection.beginTransaction();
+
+  connection.query(updateLScoreQuery, [EventhostScore, Eventhost])
 
     const updateQuery = `
     UPDATE b_eventrecord
@@ -4686,26 +4576,7 @@ const Place3rd1 = req.body.Place3rd1;
 const Place3rd2 = req.body.Place3rd2;
 const Place3rd3 = req.body.Place3rd3;
 const Place3rd4 = req.body.Place3rd4;
-const Semifinalist1 = req.body.Semifinalist1;
-const Semifinalist2 = req.body.Semifinalist2;
-const Semifinalist3 = req.body.Semifinalist3;
-const Semifinalist4 = req.body.Semifinalist4;
-const Quarterfinalist1 = req.body.Quarterfinalist1;
-const Quarterfinalist2 = req.body.Quarterfinalist2;
-const Quarterfinalist3 = req.body.Quarterfinalist3;
-const Quarterfinalist4 = req.body.Quarterfinalist4;
-const Quarterfinalist5 = req.body.Quarterfinalist5;
-const Quarterfinalist6 = req.body.Quarterfinalist6;
-const Quarterfinalist7 = req.body.Quarterfinalist7;
-const Quarterfinalist8 = req.body.Quarterfinalist8;
-const Quarterfinalist9 = req.body.Quarterfinalist9;
-const Quarterfinalist10 = req.body.Quarterfinalist10;
-const Quarterfinalist11 = req.body.Quarterfinalist11;
-const Quarterfinalist12 = req.body.Quarterfinalist12;
-const Quarterfinalist13 = req.body.Quarterfinalist13;
-const Quarterfinalist14 = req.body.Quarterfinalist14;
-const Quarterfinalist15 = req.body.Quarterfinalist15;
-const Quarterfinalist16 = req.body.Quarterfinalist16;
+const Eventhost = req.body.Eventhost;
 
 const updateQueriesCham = [Championship1, Championship2, Championship3, Championship4];
 const updateQueriesRunner = [Runner_up1, Runner_up2, Runner_up3, Runner_up4];
@@ -4731,7 +4602,7 @@ const updateLScoreQuery = `
     connection = await pool.getConnection();
     await connection.beginTransaction();
 
-    
+    connection.query(updateLScoreQuery, [EventhostScore, Eventhost])
 
 switch (numberteams) {
   case 2:

@@ -1,6 +1,13 @@
 <script>
   let winners = [
     {
+      season: "2024.6 랭킹전",
+      first: "스티븐",
+      second: "BallistaBB",
+      third: "kissa",
+      details: "-",
+    },
+    {
       season: "2024.5 랭킹전",
       first: "BallistaBB",
       second: "스티븐",

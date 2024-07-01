@@ -163,7 +163,7 @@
   {:else if error}
     <p>Error: {error.message}</p>
   {:else}
-    {#each eventData as { eventname, numberteams, Championship1, Championship2, Championship3, Championship4, Runner_up1, Runner_up2, Runner_up3, Runner_up4, Place3rd1, Place3rd2, Place3rd3, Place3rd4, ok, teamSize }, index}
+    {#each eventData as { eventname, numberteams, Championship1, Championship2, Championship3, Championship4, Runner_up1, Runner_up2, Runner_up3, Runner_up4, Place3rd1, Place3rd2, Place3rd3, Place3rd4, ok, teamSize, Eventhost }, index}
       <div class="table-contents-wrapper">
         <div
           class="table-contents"
@@ -174,7 +174,8 @@
             {eventname}
           </div>
           <div class="table-contents_member table-contents_cell">
-            {String(numberteams) + "x" + String(teamSize)}
+            {#if numberteams === 24}정규전{:else}
+              {String(numberteams) + "x" + String(teamSize)}{/if}
           </div>
           <div class="table-contents_allwinner table-contents_cell">
             {Championship1}
@@ -192,7 +193,8 @@
         </div>
         {#if showDetails[index]}
           <div class="table-contents_detail {showDetails[index] ? 'show' : ''}">
-            토너먼트 결과<br />
+            토너먼트 정보<br />
+            주최자 : {Eventhost}<br />
             우승 : {Championship1 ? Championship1 : ""}
             {Championship2 ? Championship2 : ""}
             {Championship3 ? Championship3 : ""}

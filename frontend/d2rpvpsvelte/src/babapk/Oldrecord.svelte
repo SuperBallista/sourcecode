@@ -11,7 +11,7 @@
   let filteredData = [];
   let paginatedData = [];
 
-  $: totalPages = () => Math.ceil(filteredData.length / itemsPerPage);
+  $: totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   async function fetchData() {
     try {
@@ -91,8 +91,9 @@
   const secondTableItemsPerPage = 10;
   let secondTablePaginatedData = [];
 
-  $: secondTableTotalPages = () =>
-    Math.ceil(lookingdata.length / secondTableItemsPerPage);
+  $: secondTableTotalPages = Math.ceil(
+    lookingdata.length / secondTableItemsPerPage
+  );
 
   function secondTableChangePage(page) {
     secondTableCurrentPage = page;
@@ -132,6 +133,31 @@
     );
     updateSecondTablePaginatedData(); // 필터링 후 페이지네이션 데이터 업데이트
   }
+
+  function getVisiblePages(currentPage, totalPages) {
+    const maxVisible = 5; // Maximum visible pages at once
+    const pages = [];
+
+    let start = Math.max(currentPage - Math.floor(maxVisible / 2), 1);
+    let end = start + maxVisible - 1;
+
+    if (end > totalPages) {
+      end = totalPages;
+      start = Math.max(end - maxVisible + 1, 1);
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  $: visiblePages = getVisiblePages(currentPage, totalPages);
+  $: secondTableVisiblePages = getVisiblePages(
+    secondTableCurrentPage,
+    secondTableTotalPages
+  );
 </script>
 
 <!-- 두 번째 테이블 -->
@@ -176,20 +202,20 @@
       >
     {/if}
 
-    {#each Array(secondTableTotalPages()) as _, pageIndex (pageIndex)}
+    {#each secondTableVisiblePages as page}
       <button
-        class:active={secondTableCurrentPage === pageIndex + 1}
-        on:click={() => secondTableChangePage(pageIndex + 1)}
+        class:active={secondTableCurrentPage === page}
+        on:click={() => secondTableChangePage(page)}
       >
-        {pageIndex + 1}
+        {page}
       </button>
     {/each}
 
-    {#if secondTableCurrentPage < secondTableTotalPages()}
+    {#if secondTableCurrentPage < secondTableTotalPages}
       <button on:click={() => secondTableChangePage(secondTableCurrentPage + 1)}
         >Next</button
       >
-      <button on:click={() => secondTableChangePage(secondTableTotalPages())}
+      <button on:click={() => secondTableChangePage(secondTableTotalPages)}
         >Last</button
       >
     {/if}
@@ -262,18 +288,18 @@
         <button on:click={() => changePage(currentPage - 1)}>Previous</button>
       {/if}
 
-      {#each Array(totalPages()) as _, pageIndex (pageIndex)}
+      {#each visiblePages as page}
         <button
-          class:active={currentPage === pageIndex + 1}
-          on:click={() => changePage(pageIndex + 1)}
+          class:active={currentPage === page}
+          on:click={() => changePage(page)}
         >
-          {pageIndex + 1}
+          {page}
         </button>
       {/each}
 
-      {#if currentPage < totalPages()}
+      {#if currentPage < totalPages}
         <button on:click={() => changePage(currentPage + 1)}>Next</button>
-        <button on:click={() => changePage(totalPages())}>Last</button>
+        <button on:click={() => changePage(totalPages)}>Last</button>
       {/if}
     </div>
   {/if}

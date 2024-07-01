@@ -18,7 +18,7 @@
   let error = null;
   let showDetails = [];
   let currentPage = 1;
-  const itemsPerPage = 20;
+  const itemsPerPage = 10;
   let filter = "All";
   let filteredData = [];
   let paginatedData = [];
@@ -66,7 +66,9 @@
   }
 
   function changePage(page) {
+    updatekey();
     currentPage = page;
+    console.log(currentPage);
     updatePaginatedData(); // 페이지 변경 시 페이지네이션 데이터 업데이트
   }
 
@@ -85,7 +87,7 @@
     paginatedData = filteredData.slice(start, end);
   }
 
-  $: totalPages = () => Math.ceil(filteredData.length / itemsPerPage);
+  $: totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   function handleFilterChange(event) {
     filter = event.target.value;
@@ -94,26 +96,22 @@
     updatePaginatedData(); // 페이지네이션 데이터 초기화
   }
 
-  function visiblePages() {
+  $: visiblePages = getVisiblePages(currentPage, totalPages);
+
+  function getVisiblePages(currentPage, totalPages) {
     const maxVisible = 5; // 한 번에 표시할 최대 페이지 수
     const pages = [];
 
-    if (totalPages() <= maxVisible) {
-      for (let i = 1; i <= totalPages(); i++) {
-        pages.push(i);
-      }
-    } else {
-      let start = Math.max(currentPage - Math.floor(maxVisible / 2), 1);
-      let end = start + maxVisible - 1;
+    let start = Math.max(currentPage - Math.floor(maxVisible / 2), 1);
+    let end = start + maxVisible - 1;
 
-      if (end > totalPages()) {
-        end = totalPages();
-        start = end - maxVisible + 1;
-      }
+    if (end > totalPages) {
+      end = totalPages;
+      start = Math.max(end - maxVisible + 1, 1);
+    }
 
-      for (let i = start; i <= end; i++) {
-        pages.push(i);
-      }
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
     }
 
     return pages;
@@ -219,7 +217,7 @@
         <button on:click={() => changePage(currentPage - 1)}>Previous</button>
       {/if}
 
-      {#each visiblePages() as page}
+      {#each visiblePages as page}
         <button
           class:active={currentPage === page}
           on:click={() => changePage(page)}
@@ -227,10 +225,9 @@
           {page}
         </button>
       {/each}
-
-      {#if currentPage < totalPages()}
+      {#if currentPage < totalPages}
         <button on:click={() => changePage(currentPage + 1)}>Next</button>
-        <button on:click={() => changePage(totalPages())}>Last</button>
+        <button on:click={() => changePage(totalPages)}>Last</button>
       {/if}
     </div>
   {/if}

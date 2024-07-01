@@ -23,7 +23,7 @@
     <a
       href="https://docs.google.com/document/d/1b-vnUyLaDrSnSMouTOoFAYz5K3lq8hS-kzjh_R-JuD8/"
       ><div class="table-contents">
-        <div class="table-linktext">6월 랭킹 시스템 안내</div>
+        <div class="table-linktext">월별 랭킹 시스템 안내</div>
       </div></a
     >
   </div>

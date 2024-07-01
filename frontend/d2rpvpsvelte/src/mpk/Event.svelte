@@ -11,6 +11,7 @@
   import { get } from "svelte/store";
 
   import { onMount } from "svelte";
+  import Event from "../babapk/Event.svelte";
 
   let eventData = [];
   let loading = true;
@@ -22,7 +23,7 @@
     const checkjwt = get(jwtoken);
     if (checkjwt) {
       try {
-        const endpoint = $mode ? "/cancel-accepted_m" : "/cancel-accepted";
+        const endpoint = "/cancel-accepted_m";
         const response = await fetch(endpoint, {
           method: "DELETE",
           headers: {
@@ -52,7 +53,7 @@
     const checkjwt = get(jwtoken);
     if (checkjwt) {
       try {
-        const endpoint = $mode ? "/accept-event_m" : "/accept-event";
+        const endpoint = "/accept-event_m";
         const response = await fetch(endpoint, {
           method: "POST",
           headers: {
@@ -83,7 +84,7 @@
     const checkjwt = get(jwtoken);
     if (checkjwt) {
       try {
-        const endpoint = $mode ? "/delete-event_m" : "/delete-event";
+        const endpoint = "/delete-event_m";
         const response = await fetch(endpoint, {
           method: "DELETE",
           headers: {
@@ -110,7 +111,7 @@
 
   async function fetchData() {
     try {
-      const endpoint = $mode ? "/eventhistory_m" : "/eventhistory";
+      const endpoint = "/eventhistory_m";
       const response = await fetch(endpoint);
       if (!response.ok) {
         throw new Error("연결 에러입니다");
@@ -171,7 +172,7 @@
   {:else if error}
     <p>Error: {error.message}</p>
   {:else}
-    {#each eventData as { eventname, numberteams, Championship1, Championship2, Championship3, Championship4, Runner_up1, Runner_up2, Runner_up3, Runner_up4, Place3rd1, Place3rd2, Place3rd3, Place3rd4, ok, teamSize }, index}
+    {#each eventData as { eventname, numberteams, Championship1, Championship2, Championship3, Championship4, Runner_up1, Runner_up2, Runner_up3, Runner_up4, Place3rd1, Place3rd2, Place3rd3, Place3rd4, ok, teamSize, Eventhost }, index}
       <div class="table-contents-wrapper">
         <div
           class="table-contents"
@@ -200,7 +201,8 @@
         </div>
         {#if showDetails[index]}
           <div class="table-contents_detail {showDetails[index] ? 'show' : ''}">
-            토너먼트 결과<br />
+            토너먼트 정보<br />
+            주최자 : {Eventhost ? Eventhost.replace("_m", "") : ""}<br />
             우승 : {Championship1 ? Championship1.replace("_m", "") : ""}
             {Championship2 ? Championship2.replace("_m", "") : ""}
             {Championship3 ? Championship3.replace("_m", "") : ""}

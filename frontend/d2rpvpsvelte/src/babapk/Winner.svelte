@@ -1,6 +1,14 @@
 <script>
   let winners = [
     {
+      season: "2024.6 랭킹전",
+      first: "Head",
+      second: "Jay",
+      third: "Duky",
+      details:
+        "3티어 정식전 : 1위 Duky 2위 Jay 3위 IRONKIM<br/>고뇌 정규전 : 1위 Head 2위 jay 3위 봐바<br/>레어 정규전 : 1위 Jay 2위 Duky",
+    },
+    {
       season: "2024.5 랭킹전",
       first: "Duky",
       second: "Head",

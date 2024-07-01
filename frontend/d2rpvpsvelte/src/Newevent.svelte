@@ -7,6 +7,7 @@
     getCsrfToken,
     jwtoken,
     mode,
+    nickname,
   } from "./store.js";
   import { get } from "svelte/store";
 
@@ -40,6 +41,7 @@
   let teamSize;
   let numberteams;
   let eventname;
+  $: Eventhost = $nickname === "admin_m" ? "admin" : $nickname;
 
   function checkForDuplicates() {
     if (teamSize < 2) {
@@ -83,6 +85,7 @@
       Place3rd2,
       Place3rd3,
       Place3rd4,
+      Eventhost,
     ];
 
     const filteredValues = values.filter(
@@ -172,6 +175,7 @@
       eventname: eventname,
       numberteams: numberteams,
       teamSize: teamSize,
+      Eventhost: Eventhost,
     };
     const checkjwt = get(jwtoken);
     if (checkjwt) {
@@ -218,9 +222,9 @@
     class="namewidth"
   >
     <option value="2">2팀(듀얼)</option>
-    <option value="4">3-4팀(4강)</option>
-    <option value="8">5-8팀(8강)</option>
-    <option value="16">9팀 이상(16강)</option>
+    <option value="4">3-5팀(4강)</option>
+    <option value="8">6-11팀(8강)</option>
+    <option value="16">12팀 이상(16강)</option>
     <option value="24">정식전</option>
   </select>
   <select bind:value={teamSize} on:change={HandleteamSize} class="namewidth">
